@@ -5,7 +5,8 @@
           <div v-if="noData">
             <div class="suggestion-page-head">
               <p class="resturan-name"> {{resturantInfo.name}} </p>
-              <p class="resturan-rate"> <span class="rate-num">{{resturantInfo.rating}} </span>/ 10 - {{resturantInfo.cat}}</p>
+              <p class="resturan-rate" v-if="resturantInfo.rating > 0"> <span class="rate-num">{{resturantInfo.rating}} </span>/ 10 - {{resturantInfo.cat}}</p>
+              <p class="resturan-rate" v-else> لا يوجد تقييم</p>
               <div>
                 <a :href="resturantInfo.link" target="_blank"><img src="@/assets/img/link.png" /> </a>
               </div>
@@ -65,15 +66,11 @@
           });
       },
       getResturantInfo() {
-        axios.get(`https://wainnakel.com/api/v1/GenerateFS.php?uid=${this.userCoordinates.lat},${this.userCoordinates.lng}}`).then((response) => {
+        axios.get(`https://wainnakel.com/api/v1/GenerateFS.php?uid=${this.userCoordinates.lat},${this.userCoordinates.lng}`).then((response) => {
           if (response.status == 200) {
             this.resturantInfo = response.data ;
-            // this.resturantCoordinates.lat = this.resturantInfo.lat ;
-            // this.resturantCoordinates.lng = this.resturantInfo.lon ;
-
-            this.resturantCoordinates.lat = 30.921654599999997 ;
-            this.resturantCoordinates.lng = 31.397291799999994; 
-            console.log("resturantInfo", this.resturantInfo);
+            this.resturantCoordinates.lat = this.resturantInfo.lat ;
+            this.resturantCoordinates.lng = this.resturantInfo.lon ;
             this.noData = true;
           }
         })
