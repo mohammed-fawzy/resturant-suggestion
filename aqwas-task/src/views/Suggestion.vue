@@ -54,7 +54,7 @@
     },
     created() {
      this.getLocation();
-      this.getResturantInfo();
+     this.getResturantInfo();
     },
     methods: {
       getLocation(){
@@ -69,8 +69,8 @@
         axios.get(`https://wainnakel.com/api/v1/GenerateFS.php?uid=${this.userCoordinates.lat},${this.userCoordinates.lng}`).then((response) => {
           if (response.status == 200) {
             this.resturantInfo = response.data ;
-            this.resturantCoordinates.lat = this.resturantInfo.lat ;
-            this.resturantCoordinates.lng = this.resturantInfo.lon ;
+            this.resturantCoordinates.lat = parseFloat(this.resturantInfo.lat) ;
+            this.resturantCoordinates.lng = parseFloat(this.resturantInfo.lon) ;
             this.noData = true;
           }
         })
